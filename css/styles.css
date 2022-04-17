@@ -1,0 +1,15 @@
+.header-text {
+  background-color: #562b81;
+  color: white;
+  padding: 10px;
+  margin: 0;
+}
+
+.placeholder-image {
+  max-width: 100%;
+}
+
+input,
+textarea {
+  width: 100%;
+}
