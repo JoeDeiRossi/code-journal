@@ -1,8 +1,11 @@
-.header-text {
+.header-container {
+  padding: 0;
   background-color: #562b81;
+}
+
+.header-text {
   color: white;
-  padding: 10px;
-  margin: 0;
+  padding: 10px 1.5rem;
 }
 
 .placeholder-image {
@@ -12,4 +15,22 @@
 input,
 textarea {
   width: 100%;
+}
+
+.save-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-button {
+  background-color: #562b81;
+  color: white;
+  width: 60px;
+  padding: 5px 0;
+}
+
+@media screen and (min-width: 768px) {
+  .header-text {
+    padding: 10px 2.25rem;
+  }
 }
