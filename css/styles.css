@@ -6,10 +6,17 @@
 .header-text {
   color: white;
   padding: 10px 1.5rem;
+  font-weight: 100;
 }
 
 .placeholder-image {
   max-width: 100%;
+}
+
+label {
+  display: inline-block;
+  margin: 20px 0 5px;
+  font-weight: 600;
 }
 
 input,
@@ -27,6 +34,8 @@ textarea {
   color: white;
   width: 60px;
   padding: 5px 0;
+  margin: 15px 0;
+  border-radius: 5px;
 }
 
 @media screen and (min-width: 768px) {
