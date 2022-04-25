@@ -70,3 +70,12 @@ for (let i = 0; i < data.entries.length; i++) {
     entriesList.appendChild(entry);
   });
 }
+
+const entriesHeader = document.querySelector('h3');
+const entryFormView = document.querySelector('[data-view="entry-form"]');
+const entriesView = document.querySelector('[data-view="entries"]');
+
+entriesHeader.addEventListener('click', event => {
+  entryFormView.className = 'hidden';
+  entriesView.className = '';
+});
