@@ -28,6 +28,10 @@
     max-width: 900px;
   }
 
+  .header-text {
+    padding: 10px 2.25rem;
+  }
+
   .column-full,
   .column-half {
     padding: 0 0.75rem;
