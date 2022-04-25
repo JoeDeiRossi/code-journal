@@ -16,6 +16,10 @@ urlInput.addEventListener('input', function (event) {
 });
 
 const form = document.querySelector('form');
+const entriesHeader = document.querySelector('h3');
+const entryFormView = document.querySelector('[data-view="entry-form"]');
+const entriesView = document.querySelector('[data-view="entries"]');
+const entriesList = document.querySelector('ul');
 
 form.addEventListener('submit', function (event) {
   event.preventDefault();
@@ -30,6 +34,13 @@ form.addEventListener('submit', function (event) {
 
   imagePreview.src = 'images/placeholder-image-square.jpg';
   form.reset();
+
+  entryFormView.className = 'hidden';
+  entriesView.className = '';
+  for (let i = 0; i < data.entries.length; i++) {
+    const entry = createEntry(data.entries[i]);
+    entriesList.appendChild(entry);
+  }
 });
 
 function createEntry(entry) {
@@ -63,17 +74,12 @@ function createEntry(entry) {
   return entryLi;
 }
 
-const entriesList = document.querySelector('ul');
 for (let i = 0; i < data.entries.length; i++) {
   const entry = createEntry(data.entries[i]);
   window.addEventListener('DOMContentLoaded', event => {
     entriesList.appendChild(entry);
   });
 }
-
-const entriesHeader = document.querySelector('h3');
-const entryFormView = document.querySelector('[data-view="entry-form"]');
-const entriesView = document.querySelector('[data-view="entries"]');
 
 entriesHeader.addEventListener('click', event => {
   entryFormView.className = 'hidden';
