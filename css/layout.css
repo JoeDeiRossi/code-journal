@@ -17,6 +17,10 @@
   flex-wrap: wrap;
 }
 
+li > .row {
+  align-items: center;
+}
+
 .column-full,
 .column-half {
   width: 100%;

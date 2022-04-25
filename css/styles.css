@@ -61,9 +61,13 @@ li {
 }
 
 li img {
-  max-width: 100%;
+  width: 100%;
 }
 
 li p {
   line-height: 25px;
+}
+
+.no-entries-message {
+  text-align: center;
 }

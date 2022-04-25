@@ -19,6 +19,7 @@ const form = document.querySelector('form');
 const entriesHeader = document.querySelector('h3');
 const entryFormView = document.querySelector('[data-view="entry-form"]');
 const entriesView = document.querySelector('[data-view="entries"]');
+const entriesContainer = document.querySelector('.entries-container');
 const entriesList = document.querySelector('ul');
 
 form.addEventListener('submit', function (event) {
@@ -37,10 +38,12 @@ form.addEventListener('submit', function (event) {
 
   entryFormView.className = 'hidden';
   entriesView.className = '';
-  for (let i = 0; i < data.entries.length; i++) {
-    const entry = createEntry(data.entries[i]);
-    entriesList.appendChild(entry);
-  }
+  updateDataView('entries');
+
+  const entry = createEntry(data.entries[0]);
+  entriesList.prepend(entry);
+
+  entriesContainer.lastChild.remove();
 });
 
 function createEntry(entry) {
@@ -74,14 +77,35 @@ function createEntry(entry) {
   return entryLi;
 }
 
-for (let i = 0; i < data.entries.length; i++) {
-  const entry = createEntry(data.entries[i]);
-  window.addEventListener('DOMContentLoaded', event => {
+window.addEventListener('DOMContentLoaded', event => {
+  if (data.entries.length === 0) {
+    const noEntriesMessage = document.createElement('p');
+    noEntriesMessage.className = 'no-entries-message';
+    noEntriesMessage.textContent = 'No entries have been recorded.';
+    entriesContainer.appendChild(noEntriesMessage);
+  }
+
+  for (let i = 0; i < data.entries.length; i++) {
+    const entry = createEntry(data.entries[i]);
     entriesList.appendChild(entry);
-  });
-}
+  }
+  if (data.view === 'entries') {
+    entryFormView.className = 'hidden';
+    entriesView.className = '';
+  }
+});
 
 entriesHeader.addEventListener('click', event => {
   entryFormView.className = 'hidden';
   entriesView.className = '';
+  updateDataView('entries');
 });
+
+const newButton = document.querySelector('a');
+newButton.addEventListener('click', event => {
+  updateDataView('entry-form');
+});
+
+function updateDataView(dataView) {
+  data.view = dataView;
+}
