@@ -92,6 +92,9 @@ window.addEventListener('DOMContentLoaded', event => {
   if (data.view === 'entries') {
     entryFormView.className = 'hidden';
     entriesView.className = '';
+  } else if (data.view === 'entry-form') {
+    entryFormView.className = '';
+    entriesView.className = 'hidden';
   }
 });
 
