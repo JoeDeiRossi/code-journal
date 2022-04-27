@@ -43,7 +43,9 @@ form.addEventListener('submit', function (event) {
   const entry = createEntry(data.entries[0]);
   entriesList.prepend(entry);
 
-  entriesContainer.lastChild.remove();
+  if (entriesContainer.lastElementChild.nodeName === 'P') {
+    entriesContainer.lastElementChild.remove();
+  }
 });
 
 function createEntry(entry) {
