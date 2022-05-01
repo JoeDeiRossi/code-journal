@@ -139,5 +139,15 @@ entriesList.addEventListener('click', event => {
     entryFormView.className = '';
     entriesView.className = 'hidden';
     updateDataView('entry-form');
+
+    const clickedEntry = event.target.parentElement.parentElement.parentElement.parentElement;
+    const entryID = clickedEntry.getAttribute('data-entry-id');
+    const dataEntry = data.entries[entryID - 1];
+    data.editing = dataEntry;
+
+    titleInput.value = dataEntry.title;
+    urlInput.value = dataEntry.url;
+    notesInput.value = dataEntry.notes;
+    imagePreview.src = dataEntry.url;
   }
 });
