@@ -68,9 +68,17 @@ function createEntry(entry) {
   textColumn.setAttribute('class', 'column-half');
   rowDiv.appendChild(textColumn);
 
+  const titleRow = document.createElement('div');
+  titleRow.setAttribute('class', 'row entry-header');
+  textColumn.appendChild(titleRow);
+
   const title = document.createElement('h2');
   title.textContent = entry.title;
-  textColumn.appendChild(title);
+  titleRow.appendChild(title);
+
+  const editIcon = document.createElement('i');
+  editIcon.setAttribute('class', 'fas fa-pen fa-2x');
+  titleRow.appendChild(editIcon);
 
   const notes = document.createElement('p');
   notes.textContent = entry.notes;

@@ -64,8 +64,18 @@ li img {
   width: 100%;
 }
 
+.entry-header {
+  justify-content: space-between;
+  align-items: center;
+}
+
+i {
+  color: #562b81;
+}
+
 li p {
   line-height: 25px;
+  margin-top: 0;
 }
 
 .no-entries-message {
