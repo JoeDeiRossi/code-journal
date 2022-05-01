@@ -131,3 +131,13 @@ newButton.addEventListener('click', event => {
 function updateDataView(dataView) {
   data.view = dataView;
 }
+
+entriesList.addEventListener('click', event => {
+  if (event.target.matches('i')) {
+    const newEntry = document.querySelector('.new-entry-header');
+    newEntry.textContent = 'Edit Entry';
+    entryFormView.className = '';
+    entriesView.className = 'hidden';
+    updateDataView('entry-form');
+  }
+});
