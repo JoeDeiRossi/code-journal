@@ -30,7 +30,6 @@ form.addEventListener('submit', function (event) {
   entryObject.notes = notesInput.value;
 
   entryObject.entryID = data.nextEntryId;
-  data.nextEntryId++;
   data.entries.unshift(entryObject);
 
   imagePreview.src = 'images/placeholder-image-square.jpg';
@@ -41,7 +40,16 @@ form.addEventListener('submit', function (event) {
   updateDataView('entries');
 
   const entry = createEntry(data.entries[0]);
+  entry.setAttribute('data-entry-id', 1);
+
+  for (let i = 0; i < entriesList.children.length; i++) {
+    const currentEntry = entriesList.children[i];
+    const newID = parseInt(currentEntry.getAttribute('data-entry-id')) + 1;
+    currentEntry.setAttribute('data-entry-id', newID);
+  }
+
   entriesList.prepend(entry);
+  data.nextEntryId++;
 
   if (entriesContainer.lastElementChild.nodeName === 'P') {
     entriesContainer.lastElementChild.remove();
@@ -97,6 +105,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
   for (let i = 0; i < data.entries.length; i++) {
     const entry = createEntry(data.entries[i]);
+    entry.setAttribute('data-entry-id', i + 1);
     entriesList.appendChild(entry);
   }
   if (data.view === 'entries') {
