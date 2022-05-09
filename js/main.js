@@ -140,6 +140,8 @@ window.addEventListener('DOMContentLoaded', event => {
     entryFormView.className = '';
     entriesView.className = 'hidden';
   }
+
+  data.editing = null;
 });
 
 entriesHeader.addEventListener('click', event => {
@@ -181,3 +183,11 @@ entriesList.addEventListener('click', event => {
     }
   }
 });
+
+const modalContainer = document.querySelector('.modal-container');
+const deleteEntry = document.querySelector('.delete-text');
+deleteEntry.addEventListener('click', handleClick);
+
+function handleClick(event) {
+  modalContainer.className += ' active';
+}
