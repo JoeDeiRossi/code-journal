@@ -142,6 +142,8 @@ window.addEventListener('DOMContentLoaded', event => {
   }
 
   data.editing = null;
+  const deleteText = document.querySelector('.delete-text');
+  deleteText.className = 'delete-text';
 });
 
 entriesHeader.addEventListener('click', event => {
@@ -168,6 +170,9 @@ entriesList.addEventListener('click', event => {
     entriesView.className = 'hidden';
     updateDataView('entry-form');
 
+    const deleteText = document.querySelector('.delete-text');
+    deleteText.className += ' editing';
+
     const clickedEntry = event.target.parentElement.parentElement.parentElement.parentElement;
     const entryID = parseInt(clickedEntry.getAttribute('data-entry-id'));
 
@@ -191,3 +196,9 @@ deleteEntry.addEventListener('click', handleClick);
 function handleClick(event) {
   modalContainer.className += ' active';
 }
+
+const cancelButton = document.querySelector('.cancel-button');
+cancelButton.addEventListener('click', event => {
+  event.preventDefault();
+  modalContainer.className = 'modal-container';
+});
