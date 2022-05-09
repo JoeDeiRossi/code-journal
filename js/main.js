@@ -40,7 +40,6 @@ form.addEventListener('submit', function (event) {
     entriesList.prepend(entry);
     data.nextEntryId++;
   } else {
-
     let editedEntry = null;
     for (let i = 0; i < data.entries.length; i++) {
       if (data.editing.entryID === data.entries[i].entryID) {
@@ -52,14 +51,17 @@ form.addEventListener('submit', function (event) {
     editedEntry.url = urlInput.value;
     editedEntry.notes = notesInput.value;
 
-    const nthChildSelector = convertIDToSelector(editedEntry.entryID);
-
-    const editedImg = document.querySelector(`li:nth-child(${nthChildSelector}) img`);
-    editedImg.setAttribute('src', urlInput.value);
-    const editedTitle = document.querySelector(`li:nth-child(${nthChildSelector}) h2`);
-    editedTitle.textContent = titleInput.value;
-    const editedNotes = document.querySelector(`li:nth-child(${nthChildSelector}) p`);
-    editedNotes.textContent = notesInput.value;
+    const listOfEntries = document.querySelector('ul').children;
+    for (let i = 0; i < listOfEntries.length; i++) {
+      if (parseInt(listOfEntries[i].getAttribute('data-entry-id')) === editedEntry.entryID) {
+        const editedImg = document.querySelector(`li:nth-child(${i + 1}) img`);
+        editedImg.setAttribute('src', urlInput.value);
+        const editedTitle = document.querySelector(`li:nth-child(${i + 1}) h2`);
+        editedTitle.textContent = titleInput.value;
+        const editedNotes = document.querySelector(`li:nth-child(${i + 1}) p`);
+        editedNotes.textContent = notesInput.value;
+      }
+    }
   }
 
   imagePreview.src = 'images/placeholder-image-square.jpg';
@@ -75,11 +77,6 @@ form.addEventListener('submit', function (event) {
 
   data.editing = null;
 });
-
-function convertIDToSelector(id) {
-  const selector = data.entries.length + 1 - id;
-  return selector;
-}
 
 function createEntry(entry) {
   const entryLi = document.createElement('li');
@@ -130,7 +127,7 @@ window.addEventListener('DOMContentLoaded', event => {
 
   for (let i = 0; i < data.entries.length; i++) {
     const entry = createEntry(data.entries[i]);
-    entry.setAttribute('data-entry-id', data.entries.length - i);
+    entry.setAttribute('data-entry-id', data.entries[i].entryID);
     entriesList.appendChild(entry);
   }
   if (data.view === 'entries') {
@@ -140,6 +137,10 @@ window.addEventListener('DOMContentLoaded', event => {
     entryFormView.className = '';
     entriesView.className = 'hidden';
   }
+
+  data.editing = null;
+  const deleteText = document.querySelector('.delete-text');
+  deleteText.className = 'delete-text';
 });
 
 entriesHeader.addEventListener('click', event => {
@@ -166,6 +167,9 @@ entriesList.addEventListener('click', event => {
     entriesView.className = 'hidden';
     updateDataView('entry-form');
 
+    const deleteText = document.querySelector('.delete-text');
+    deleteText.className += ' editing';
+
     const clickedEntry = event.target.parentElement.parentElement.parentElement.parentElement;
     const entryID = parseInt(clickedEntry.getAttribute('data-entry-id'));
 
@@ -179,5 +183,51 @@ entriesList.addEventListener('click', event => {
         imagePreview.src = data.entries[i].url;
       }
     }
+  }
+});
+
+const modalContainer = document.querySelector('.modal-container');
+const deleteEntry = document.querySelector('.delete-text');
+deleteEntry.addEventListener('click', handleClick);
+
+function handleClick(event) {
+  modalContainer.className += ' active';
+}
+
+const cancelButton = document.querySelector('.cancel-button');
+cancelButton.addEventListener('click', event => {
+  event.preventDefault();
+  modalContainer.className = 'modal-container';
+});
+
+const confirmButton = document.querySelector('.confirm-button');
+confirmButton.addEventListener('click', event => {
+  event.preventDefault();
+  const entryID = data.editing.entryID;
+
+  const listOfEntries = document.querySelector('ul').children;
+  for (let i = 0; i < listOfEntries.length; i++) {
+    if (parseInt(listOfEntries[i].getAttribute('data-entry-id')) === entryID) {
+      listOfEntries[i].remove();
+    }
+  }
+
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryID === entryID) {
+      data.entries.splice(i, 1);
+    }
+  }
+
+  modalContainer.className = 'modal-container';
+  entryFormView.className = 'hidden';
+  entriesView.className = '';
+  updateDataView('entries');
+  data.editing = null;
+
+  if (data.entries.length === 0) {
+    const noEntriesMessage = document.createElement('p');
+    noEntriesMessage.className = 'no-entries-message';
+    noEntriesMessage.textContent = 'No entries have been recorded.';
+    entriesContainer.appendChild(noEntriesMessage);
   }
 });
